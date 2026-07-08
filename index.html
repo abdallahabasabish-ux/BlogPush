@@ -11,7 +11,6 @@
 </head>
 <body>
 
-<!-- شريط التنقل -->
 <nav class="navbar-custom">
     <div class="navbar-brand">
         <i class="fas fa-bell"></i> <span>Nile</span>Push
@@ -31,10 +30,7 @@
     </div>
 </nav>
 
-<!-- المحتوى الرئيسي -->
 <div class="container-custom">
-
-    <!-- بطاقات الإحصائيات -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-globe"></i></div>
@@ -58,7 +54,6 @@
         </div>
     </div>
 
-    <!-- بطاقة الترحيب والإجراءات السريعة -->
     <div class="card-custom" style="margin-top:20px;">
         <h2 style="margin-bottom:10px;"><i class="fas fa-rocket" style="color:#C9A84C;"></i> مرحباً بك في NilePush!</h2>
         <p style="color:#666; margin-bottom:20px;">ابدأ بإضافة موقعك الأول لجمع المشتركين وإرسال إشعارات فورية.</p>
@@ -67,27 +62,17 @@
             <a href="campaigns.html" class="btn-red"><i class="fas fa-play"></i> إنشاء حملة</a>
         </div>
     </div>
-
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // حماية الصفحة – إذا لم يكن مسجلاً، يُوجّه لتسجيل الدخول
         if (!window.app.protectPage()) return;
-
-        // تحديث الإحصائيات (بيانات وهمية حالياً، سيتم ربطها بالـ API لاحقاً)
-        document.getElementById('statWebsites').textContent = '0';
-        document.getElementById('statSubscribers').textContent = '0';
-        document.getElementById('statCampaigns').textContent = '0';
-
-        // جلب بيانات المستخدم وعرضها
         const user = window.app.getUserData();
         if (user) {
             document.getElementById('userName').textContent = user.displayName || user.email;
             document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
             document.getElementById('statStatus').textContent = user.subscriptionStatus === 'active' ? '✅ نشط' : '⛔ غير نشط';
         }
-
         console.log('✅ لوحة التحكم جاهزة');
     });
 </script>
