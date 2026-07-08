@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - NilePush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+<!-- شريط التنقل -->
+<nav class="navbar-custom">
+    <div class="navbar-brand">
+        <i class="fas fa-bell"></i> <span>Nile</span>Push
+    </div>
+    <div class="navbar-links">
+        <a href="index.html" class="active"><i class="fas fa-chart-pie"></i> الرئيسية</a>
+        <a href="websites.html"><i class="fas fa-globe"></i> المواقع</a>
+        <a href="subscribers.html"><i class="fas fa-users"></i> المشتركين</a>
+        <a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a>
+        <a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a>
+    </div>
+    <div class="navbar-user">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <div class="user-name" id="userName">مستخدم</div>
+        <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> خروج</button>
+    </div>
+</nav>
+
+<!-- المحتوى الرئيسي -->
+<div class="container-custom">
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-globe"></i></div>
+            <div class="stat-number" id="statWebsites">0</div>
+            <div class="stat-label">المواقع</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-number" id="statSubscribers">0</div>
+            <div class="stat-label">المشتركين</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-bullhorn"></i></div>
+            <div class="stat-number" id="statCampaigns">0</div>
+            <div class="stat-label">الحملات</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-bell"></i></div>
+            <div class="stat-number" id="statStatus">-</div>
+            <div class="stat-label">الحالة</div>
+        </div>
+    </div>
+
+    <!-- بطاقة الترحيب والإجراءات السريعة -->
+    <div class="card-custom" style="margin-top:20px;">
+        <h2 style="margin-bottom:10px;"><i class="fas fa-rocket" style="color:#C9A84C;"></i> مرحباً بك في NilePush!</h2>
+        <p style="color:#666; margin-bottom:20px;">ابدأ بإضافة موقعك الأول لجمع المشتركين وإرسال إشعارات فورية.</p>
+        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+            <a href="websites.html" class="btn-gold"><i class="fas fa-plus-circle"></i> إضافة موقع جديد</a>
+            <a href="campaigns.html" class="btn-red"><i class="fas fa-play"></i> إنشاء حملة</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // حماية الصفحة – إذا لم يكن مسجلاً، يُوجّه لتسجيل الدخول
+        if (!window.app.protectPage()) return;
+
+        // تحديث الإحصائيات (بيانات وهمية حالياً، سيتم ربطها بالـ API لاحقاً)
+        document.getElementById('statWebsites').textContent = '0';
+        document.getElementById('statSubscribers').textContent = '0';
+        document.getElementById('statCampaigns').textContent = '0';
+
+        // جلب بيانات المستخدم وعرضها
+        const user = window.app.getUserData();
+        if (user) {
+            document.getElementById('userName').textContent = user.displayName || user.email;
+            document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+            document.getElementById('statStatus').textContent = user.subscriptionStatus === 'active' ? '✅ نشط' : '⛔ غير نشط';
+        }
+
+        console.log('✅ لوحة التحكم جاهزة');
+    });
+</script>
+
+</body>
+</html>
