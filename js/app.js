@@ -8,7 +8,7 @@
 
 // ─── 1. الإعدادات الأساسية ────────────────────────────────────
 // 🔴 استبدل هذا الرابط برابط Apps Script الخاص بك بعد النشر
-const API_BASE_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbye_NEdwflUaTqmS8BMzHXYfi0DF9Kivu8shEpKws57oF0GVfZ4YqGK7N9ROKjXeHd43g/exec';
 const TOKEN_KEY = 'nilepush_session_token';
 const USER_KEY = 'nilepush_user_data';
 
