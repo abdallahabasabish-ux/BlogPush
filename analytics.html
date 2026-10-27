@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التحليلات – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    .charts-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; }
+    @media (max-width:1000px){ .charts-grid-2{grid-template-columns:1fr;} }
+    .perf-bar { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .perf-bar .lbl { width:180px; font-size:13px; color:var(--color-mid); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .perf-bar .track { flex:1; height:10px; background:var(--color-bg); border-radius:20px; overflow:hidden; }
+    .perf-bar .fill { height:100%; background:var(--color-dark); border-radius:20px; }
+    .perf-bar .val { width:56px; font-size:13px; font-weight:700; }
+    </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <span>جاري التحميل...</span>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-bell"></i>
+      BlogPush
+      <span>بيتا</span>
+    </div>
+    <ul class="nav-list">
+      <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> لوحة التحكم</a></li>
+      <li><a href="websites.html"><i class="fas fa-globe"></i> المواقع</a></li>
+      <li><a href="subscribers.html"><i class="fas fa-users"></i> المشتركين</a></li>
+      <li><a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a></li>
+      <li><a href="rss.html"><i class="fas fa-rss"></i> RSS التلقائي</a></li>
+      <li><a href="popups.html"><i class="fas fa-palette"></i> النوافذ المنبثقة</a></li>
+      <li><a href="billing.html"><i class="fas fa-credit-card"></i> الاشتراك والفواتير</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+      <li class="admin-only" style="display:none"><a href="admin.html"><i class="fas fa-user-shield"></i> لوحة الأدمن</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="user-card" id="userCard">
+        <div class="avatar" id="userAvatar">م</div>
+        <div class="info">
+          <div class="name" id="userName">مستخدم</div>
+          <div class="email" id="userEmail">user@email.com</div>
+        </div>
+        <i class="fas fa-chevron-down" style="margin-right:auto; color:#A0A0B0; font-size:14px;"></i>
+      </div>
+      <div id="logoutMenu" style="display:none; background:#F7F8FA; border-radius:12px; margin-top:8px; padding:8px 0;">
+        <button id="logoutBtn" style="background:none; border:none; width:100%; text-align:right; padding:10px 16px; font-family:'Cairo',sans-serif; font-size:15px; color:#EF4444; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-bar">
+      <div class="greeting">
+        <h1>التحليلات المتقدمة</h1>
+        <p>رؤية شاملة لأداء حملاتك ونمو جمهورك عبر كل مواقعك</p>
+      </div>
+      <div class="actions">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <button class="btn-new" onclick="location.reload()"><i class="fas fa-rotate"></i> تحديث البيانات</button>
+      </div>
+    </header>
+
+
+    <!-- إحصائيات عامة -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header"><i class="fas fa-paper-plane"></i></div>
+        <div class="stat-number" id="anSent">٠</div>
+        <div class="stat-label">حملات مُرسلة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header"><i class="fas fa-eye"></i></div>
+        <div class="stat-number" id="anOpens">٠</div>
+        <div class="stat-label">إجمالي مرات الظهور</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header"><i class="fas fa-hand-pointer"></i></div>
+        <div class="stat-number" id="anClicks">٠</div>
+        <div class="stat-label">إجمالي النقرات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header"><i class="fas fa-percent"></i></div>
+        <div class="stat-number" id="anCtr">٠٪</div>
+        <div class="stat-label">متوسط نسبة النقر CTR</div>
+      </div>
+    </section>
+
+    <div class="charts-grid-2">
+      <div class="chart-box">
+        <div class="chart-header"><h3>نمو المشتركين (12 شهراً)</h3></div>
+        <canvas id="growth12Chart" style="max-height:260px;"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-header"><h3>توزيع الأجهزة</h3></div>
+        <canvas id="deviceChart" style="max-height:260px;"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-box" style="margin-bottom:24px;">
+      <div class="chart-header"><h3>أفضل مواقعك (حسب عدد المشتركين)</h3></div>
+      <div id="topSites" style="padding:8px 0;">جاري التحميل...</div>
+    </div>
+
+    <div class="recent-table">
+      <div class="table-header"><h3>أداء آخر الحملات</h3><a href="campaigns.html">إدارة الحملات</a></div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;min-width:700px;">
+          <thead>
+            <tr>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">الحملة</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">الموقع</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">الحالة</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">وصلت إلى</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">نقرات</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">CTR</th>
+              <th style="text-align:right;padding:12px 8px;font-size:13px;color:var(--color-mid);border-bottom:1px solid var(--color-light);">التاريخ</th>
+            </tr>
+          </thead>
+          <tbody id="perfTable">
+            <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--color-mid);">جاري التحميل...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/analytics.js"></script>
+
+</body>
+</html>

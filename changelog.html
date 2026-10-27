@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سجل التغييرات – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    .page-hero {
+      background: linear-gradient(180deg, #FFFFFF, #F7F8FA);
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+    .page-hero .tag {
+      display: inline-block;
+      background: #F1F2F5;
+      color: #1A1A2E;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+    }
+    .page-hero h1 { font-size: 40px; font-weight: 900; letter-spacing: -0.5px; }
+    .page-hero p { color: #4A4A5A; font-size: 17px; margin-top: 12px; max-width: 640px; margin-inline: auto; line-height: 1.9; }
+    .page-body { padding: 48px 0 96px; }
+    .content-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E4E8;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .content-card h2 { font-size: 22px; font-weight: 800; margin: 30px 0 12px; }
+    .content-card h2:first-child { margin-top: 0; }
+    .content-card h3 { font-size: 17px; font-weight: 700; margin: 22px 0 8px; }
+    .content-card p, .content-card li { font-size: 15px; color: #4A4A5A; line-height: 2; }
+    .content-card ul, .content-card ol { padding-right: 22px; margin: 10px 0; }
+    .content-card ul { list-style: disc; }
+    .content-card ol { list-style: decimal; }
+    .content-card .code-snippet { margin: 14px 0; }
+    .steps-mini { display: grid; gap: 14px; margin: 18px 0; }
+    .step-mini {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: #F7F8FA; border-radius: 14px; padding: 16px 20px;
+    }
+    .step-mini .n {
+      min-width: 34px; height: 34px; border-radius: 50%;
+      background: #1A1A2E; color: #fff; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+    }
+    .step-mini .t { font-weight: 700; font-size: 15px; }
+    .step-mini .s { font-size: 13.5px; color: #4A4A5A; }
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #ECFDF5; color: #10B981; font-weight: 700;
+      padding: 8px 18px; border-radius: 30px; font-size: 14px;
+    }
+    .status-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 4px; border-bottom: 1px solid #F1F2F5;
+    }
+    .status-row:last-child { border-bottom: none; }
+    .status-row .ok { color: #10B981; font-weight: 700; font-size: 14px; }
+    .contact-form { max-width: 620px; margin: 0 auto; }
+    .contact-form .form-group { margin-bottom: 16px; }
+    .contact-form .form-group label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .contact-form .form-group input, .contact-form .form-group textarea {
+      width: 100%; padding: 13px 16px; border: 1.5px solid #E2E4E8;
+      border-radius: 12px; font-family: 'Cairo', sans-serif; font-size: 15px; background: #F7F8FA;
+    }
+    .contact-form .form-group input:focus, .contact-form .form-group textarea:focus {
+      outline: none; border-color: #1A1A2E; background: #fff;
+    }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .blog-card { background: #fff; border: 1px solid #E2E4E8; border-radius: 16px; padding: 26px; }
+    .blog-card .cat { font-size: 12px; font-weight: 700; color: #F59E0B; }
+    .blog-card h3 { font-size: 17px; font-weight: 800; margin: 8px 0; }
+    .blog-card p { font-size: 13.5px; color: #4A4A5A; }
+    @media (max-width: 640px) { .page-hero h1 { font-size: 30px; } .content-card { padding: 26px; } }
+</style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-logo">
+        <i class="fas fa-bell"></i>
+        BlogPush
+        <span>بيتا</span>
+      </a>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html#features">المميزات</a></li>
+        <li><a href="index.html#pricing">الأسعار</a></li>
+        <li><a href="docs.html" class="">التوثيق</a></li>
+        <li><a href="faq.html">الأسئلة الشائعة</a></li>
+        <li><a href="status.html">الحالة</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+        <a href="register.html" class="btn btn-primary">ابدأ مجاناً</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="تبديل القائمة">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="tag">المنتج</span>
+      <h1>سجل التغييرات</h1>
+      <p>كل ما هو جديد في BlogPush — التحديثات والمميزات والإصلاحات.</p>
+    </div>
+  </section>
+  <section class="page-body">
+    <div class="container">
+
+      <div class="content-card">
+        <h2>الإصدار 2.0 — النظام الكامل <span style="font-size:12px;color:#10B981;background:#ECFDF5;padding:3px 12px;border-radius:20px;">الحالي</span></h2>
+        <ul>
+          <li><b>بوابة دفع متكاملة:</b> PayPal بالدولار + فودافون كاش بالجنيه مع رفع الإيصالات.</li>
+          <li><b>لوحة تحكم أدمن شاملة:</b> اعتماد المدفوعات، إدارة المستخدمين والاشتراكات، إحصائيات الإيرادات، وإعدادات المنصة الحية.</li>
+          <li><b>نظام اشتراكات:</b> خطط مجاني/مبتدئ/احترافي بحدود مشتركين، تجربة 14 يوماً، وتجديد تلقائي للتنبيهات.</li>
+          <li><b>صفحات جديدة:</b> التحليلات المتقدمة، RSS التلقائي، منشئ النوافذ المنبثقة، فواتيري، والإعدادات الكاملة.</li>
+          <li><b>حماية الصفحات:</b> حظر المستخدمين، صلاحيات الأدمن، وانتهاء صلاحية الخطط تلقائياً.</li>
+        </ul>
+
+        <h2>الإصدار 1.5</h2>
+        <ul>
+          <li>التحقق من المواقع عبر ميتا تاج مع وكلاء احتياطيين متعددين.</li>
+          <li>لوحة تحكم بمخططات حية (نمو المشتركين، توزيع الأجهزة).</li>
+          <li>تصدير المشتركين CSV وفلترة متقدمة.</li>
+        </ul>
+
+        <h2>الإصدار 1.0</h2>
+        <ul>
+          <li>إطلاق المنصة: صفحة هبوط، تسجيل حسابات، إدارة المواقع والمشتركين والحملات.</li>
+          <li>دعم كامل للعربية RTL وتصميم متجاوب.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3><i class="fas fa-bell"></i> BlogPush</h3>
+          <p>أقوى منصة إشعارات فورية مخصصة لمواقع Blogger.</p>
+        </div>
+        <div class="footer-col">
+          <h4>المنتج</h4>
+          <ul>
+            <li><a href="index.html#features">المميزات</a></li>
+            <li><a href="index.html#pricing">الأسعار</a></li>
+            <li><a href="docs.html">التوثيق</a></li>
+            <li><a href="changelog.html">سجل التغييرات</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الشركة</h4>
+          <ul>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
+            <li><a href="blog.html">المدونة</a></li>
+            <li><a href="status.html">الحالة</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>القوانين</h4>
+          <ul>
+            <li><a href="privacy.html">سياسة الخصوصية</a></li>
+            <li><a href="terms.html">شروط الخدمة</a></li>
+            <li><a href="cookies.html">سياسة ملفات تعريف الارتباط</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الدعم</h4>
+          <ul>
+            <li><a href="help.html">مركز المساعدة</a></li>
+            <li><a href="faq.html">الأسئلة الشائعة</a></li>
+            <li><a href="contact.html">تواصل مع الدعم</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© ٢٠٢٦ BlogPush. جميع الحقوق محفوظة.</span>
+        <div class="social">
+          <a href="#" aria-label="منصة X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="لينكد إن"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+        links.querySelectorAll('a').forEach(function (l) {
+          l.addEventListener('click', function () { links.classList.remove('open'); });
+        });
+      }
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          const t = document.querySelector(this.getAttribute('href'));
+          if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+        });
+      });
+    });
+  </script>
+
+  <script src="js/enhance.js"></script>
+</body>
+</html>

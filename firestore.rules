@@ -1,0 +1,95 @@
+rules_version = '2';
+
+// ================================================================
+// قواعد أمان Firestore الخاصة بمنصة BlogPush
+// ------------------------------------------------------------
+// طريقة التفعيل:
+// 1. افتح https://console.firebase.google.com ← مشروعك
+// 2. من القائمة: Firestore Database ← Rules
+// 3. انسخ هذا الملف كاملاً والصقه ثم اضغط Publish
+// ================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- دالة مساعدة: هل المستخدم أدمن؟ ----------
+    // الأدمن = بريده موجود في قائمة adminEmails داخل إعدادات المنصة
+    // أو دوره 'admin' في ملفه الشخصي
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email in get(/databases/$(database)/documents/settings/platform).data.adminEmails
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ---------- إعدادات المنصة ----------
+    // القراءة متاحة للمسجلين (الصفحات تحتاج الأسعار ورقم فودافون كاش...)
+    // التعديل للأدمن فقط
+    match /settings/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ---------- المستخدمون ----------
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      // إنشاء الملف الشخصي: من نفس المستخدم فقط
+      allow create: if isOwner(userId)
+        && request.resource.data.uid == userId
+        && request.resource.data.role == 'user'
+        || (isOwner(userId) && request.auth.token.email in get(/databases/$(database)/documents/settings/platform).data.adminEmails);
+      // التعديل: المستخدم يعدل ملفه لكن لا يستطيع تغيير خطته أو دوره أو حالته بنفسه
+      allow update: if (isOwner(userId)
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.plan == resource.data.plan
+          && request.resource.data.planExpiry == resource.data.planExpiry
+          && request.resource.data.status == resource.data.status)
+        || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- المدفوعات ----------
+    match /payments/{paymentId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      // المستخدم ينشئ طلب دفع لنفسه بحالة "قيد المراجعة" فقط
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.status == 'pending';
+      // الاعتماد/الرفض للأدمن فقط
+      allow update, delete: if isAdmin();
+    }
+
+    // ---------- بيانات المستخدم (مواقع، مشتركون، حملات، RSS، نوافذ) ----------
+    match /websites/{id} {
+      allow read, write: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+    match /subscribers/{id} {
+      allow read, write: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+    match /campaigns/{id} {
+      allow read, write: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+    match /rssFeeds/{id} {
+      allow read, write: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+    match /popups/{id} {
+      allow read, write: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // ---------- أي شيء آخر: مرفوض ----------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

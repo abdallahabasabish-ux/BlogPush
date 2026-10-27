@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب – BlogPush</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    /* ==========================================================
+       RESET & BASE
+       ========================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1A1A2E;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ==========================================================
+       الحاوية الرئيسية (شاشة كاملة)
+       ========================================================== */
+    .auth-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+    }
+
+    /* ==========================================================
+       الجانب الأيسر: الصورة الخلفية (تظهر فقط على الكمبيوتر)
+       ========================================================== */
+    .auth-image {
+      flex: 1;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1432888622747-4eb9a8f2c2a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-image .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 26, 46, 0.75);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .auth-image .content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      text-align: center;
+      padding: 40px;
+      max-width: 440px;
+    }
+
+    .auth-image .content i {
+      font-size: 56px;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .auth-image .content h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .auth-image .content p {
+      font-size: 18px;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+
+    .auth-image .content .features-list {
+      text-align: right;
+      margin-top: 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .auth-image .content .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .auth-image .content .features-list li:last-child {
+      border-bottom: none;
+    }
+
+    .auth-image .content .features-list li i {
+      font-size: 18px;
+      color: #10B981;
+    }
+
+    /* ==========================================================
+       الجانب الأيمن: نموذج التسجيل
+       ========================================================== */
+    .auth-form-wrapper {
+      width: 520px;
+      min-width: 520px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 56px;
+      background: #ffffff;
+      overflow-y: auto;
+    }
+
+    .auth-form-wrapper .brand {
+      margin-bottom: 32px;
+    }
+
+    .auth-form-wrapper .brand i {
+      font-size: 32px;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #A855F7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-form-wrapper .brand h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1A1A2E;
+      margin-top: 8px;
+    }
+
+    .auth-form-wrapper .brand p {
+      font-size: 16px;
+      color: #4A4A5A;
+      margin-top: 4px;
+    }
+
+    /* عناصر النموذج */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      color: #1A1A2E;
+      margin-bottom: 6px;
+    }
+
+    .form-group .input-wrapper {
+      position: relative;
+    }
+
+    .form-group .input-wrapper i {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #A0A0B0;
+      font-size: 18px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      border: 1.5px solid #E2E4E8;
+      border-radius: 14px;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+      background: #F7F8FA;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      border-color: #1A1A2E;
+      background: #ffffff;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.06);
+    }
+
+    .form-group .error-message {
+      color: #EF4444;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .form-group .error-message.show {
+      display: block;
+    }
+
+    /* الأزرار */
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #A855F7 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #5558E8 0%, #7C4DF0 55%, #9B45F0 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.40);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #A0A0B0;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid #E2E4E8;
+    }
+
+    .divider::before {
+      margin-left: 16px;
+    }
+
+    .divider::after {
+      margin-right: 16px;
+    }
+
+    .btn-google {
+      width: 100%;
+      padding: 14px;
+      background: #ffffff;
+      border: 1.5px solid #E2E4E8;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #1A1A2E;
+    }
+
+    .btn-google:hover {
+      background: #F7F8FA;
+      border-color: #1A1A2E;
+    }
+
+    .btn-google i {
+      color: #EA4335;
+      font-size: 20px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 15px;
+      color: #4A4A5A;
+    }
+
+    .auth-footer a {
+      color: #1A1A2E;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* رسائل التنبيه */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.error {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+      display: block;
+    }
+
+    .alert.success {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      display: block;
+    }
+
+    .alert.info {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+      display: block;
+    }
+
+    /* ==========================================================
+       RESPONSIVE: الأجهزة اللوحية والهواتف
+       ========================================================== */
+    @media (max-width: 1024px) {
+      .auth-image {
+        display: none;
+      }
+
+      .auth-form-wrapper {
+        width: 100%;
+        min-width: unset;
+        height: 100vh;
+        padding: 32px 24px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-form-wrapper {
+        padding: 20px 16px;
+      }
+
+      .auth-form-wrapper .brand h1 {
+        font-size: 24px;
+      }
+
+      .btn-primary {
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- الحاوية الرئيسية                                           -->
+  <!-- ========================================================== -->
+  <div class="auth-container">
+
+    <!-- القسم الأيسر: الصورة (تظهر فقط على الكمبيوتر) -->
+    <div class="auth-image">
+      <div class="overlay"></div>
+      <div class="content">
+        <i class="fas fa-rocket"></i>
+        <h2>انضم إلى آلاف المدونين</h2>
+        <p>أنشئ حسابك الآن وابدأ في جمع المشتركين وإرسال إشعارات فورية لجمهورك على Blogger.</p>
+        <ul class="features-list">
+          <li><i class="fas fa-check-circle"></i> خطة مجانية تشمل ١٠٠٠ مشترك</li>
+          <li><i class="fas fa-check-circle"></i> إشعارات تلقائية عبر RSS</li>
+          <li><i class="fas fa-check-circle"></i> لوحة تحليلات متقدمة</li>
+          <li><i class="fas fa-check-circle"></i> دعم فني على مدار الساعة</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- القسم الأيمن: نموذج التسجيل -->
+    <div class="auth-form-wrapper">
+
+      <div class="brand">
+        <i class="fas fa-bell"></i>
+        <h1>BlogPush</h1>
+        <p>أنشئ حسابك الجديد</p>
+      </div>
+
+      <!-- رسائل التنبيه -->
+      <div id="alertMessage" class="alert"></div>
+
+      <!-- نموذج التسجيل -->
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="nameInput">الاسم الكامل</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="nameInput" placeholder="أحمد محمد" required>
+          </div>
+          <div class="error-message" id="nameError">الرجاء إدخال الاسم الكامل</div>
+        </div>
+
+        <div class="form-group">
+          <label for="emailInput">البريد الإلكتروني</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="emailInput" placeholder="example@email.com" dir="ltr" required>
+          </div>
+          <div class="error-message" id="emailError">يرجى إدخال بريد إلكتروني صحيح</div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordInput">كلمة المرور</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="passwordInput" placeholder="••••••••" dir="ltr" required>
+          </div>
+          <div class="error-message" id="passwordError">كلمة المرور يجب أن تكون ٦ أحرف على الأقل</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPasswordInput">تأكيد كلمة المرور</label>
+          <div class="input-wrapper">
+            <i class="fas fa-check-circle"></i>
+            <input type="password" id="confirmPasswordInput" placeholder="••••••••" dir="ltr" required>
+          </div>
+          <div class="error-message" id="confirmError">كلمة المرور غير متطابقة</div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="registerBtn">
+          <i class="fas fa-user-plus"></i> إنشاء حساب
+        </button>
+      </form>
+
+      <div class="divider">أو</div>
+
+      <button class="btn-google" id="googleBtn">
+        <i class="fab fa-google"></i> التسجيل باستخدام Google
+      </button>
+
+      <div class="auth-footer">
+        لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- Firebase SDK                                               -->
+  <!-- ========================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- إعدادات Firebase (يجب تعديلها)                             -->
+  <!-- ========================================================== -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- منطق الصفحة                                               -->
+  <!-- ========================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // عناصر الصفحة
+      const form = document.getElementById('registerForm');
+      const nameInput = document.getElementById('nameInput');
+      const emailInput = document.getElementById('emailInput');
+      const passwordInput = document.getElementById('passwordInput');
+      const confirmInput = document.getElementById('confirmPasswordInput');
+      const registerBtn = document.getElementById('registerBtn');
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmError = document.getElementById('confirmError');
+      const alertMessage = document.getElementById('alertMessage');
+      const googleBtn = document.getElementById('googleBtn');
+
+      // التحقق من وجود Firebase
+      if (typeof firebase === 'undefined') {
+        showAlert('لم يتم تحميل Firebase. تأكد من إعداداتك.', 'error');
+        return;
+      }
+
+      // دوال العرض
+      function showAlert(text, type) {
+        alertMessage.textContent = text;
+        alertMessage.className = 'alert ' + type;
+      }
+
+      function hideAlert() {
+        alertMessage.className = 'alert';
+        alertMessage.textContent = '';
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // التحقق من صحة المدخلات
+      function validateForm() {
+        let valid = true;
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const confirm = confirmInput.value;
+
+        // الاسم
+        if (!name || name.length < 2) {
+          nameError.classList.add('show');
+          valid = false;
+        } else {
+          nameError.classList.remove('show');
+        }
+
+        // البريد الإلكتروني
+        if (!email || !isValidEmail(email)) {
+          emailError.classList.add('show');
+          valid = false;
+        } else {
+          emailError.classList.remove('show');
+        }
+
+        // كلمة المرور
+        if (!password || password.length < 6) {
+          passwordError.classList.add('show');
+          valid = false;
+        } else {
+          passwordError.classList.remove('show');
+        }
+
+        // تأكيد كلمة المرور
+        if (!confirm || confirm !== password) {
+          confirmError.classList.add('show');
+          valid = false;
+        } else {
+          confirmError.classList.remove('show');
+        }
+
+        return valid;
+      }
+
+      // التسجيل بالبريد وكلمة المرور
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideAlert();
+
+        if (!validateForm()) return;
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        registerBtn.disabled = true;
+        registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
+
+        try {
+          // إنشاء المستخدم في Firebase Auth
+          const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+
+          // تحديث الاسم في الملف الشخصي
+          await user.updateProfile({
+            displayName: name
+          });
+
+          // إنشاء ملف المستخدم في Firestore (بالدور والتجربة المجانية)
+          try {
+            const dbRef = firebase.firestore();
+            const adminList = (window.SITE_CONFIG && window.SITE_CONFIG.ADMIN_EMAILS) || [];
+            const isAdmin = adminList.some(function (e) {
+              return String(e).toLowerCase() === String(user.email || '').toLowerCase();
+            });
+            const trialEnds = new Date();
+            trialEnds.setDate(trialEnds.getDate() + ((window.SITE_CONFIG && window.SITE_CONFIG.TRIAL_DAYS) || 14));
+            dbRef.collection('users').doc(user.uid).set({
+              uid: user.uid,
+              email: user.email || '',
+              displayName: user.displayName || name || (user.email ? user.email.split('@')[0] : 'مستخدم'),
+              photoURL: user.photoURL || '',
+              role: isAdmin ? 'admin' : 'user',
+              plan: 'free',
+              planStartedAt: null,
+              planExpiry: null,
+              trialEndsAt: firebase.firestore.Timestamp.fromDate(trialEnds),
+              status: 'active',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+          } catch (dbErr) {
+            console.warn('⚠️ تعذر إنشاء ملف المستخدم (سيُنشأ تلقائياً عند دخول اللوحة):', dbErr);
+          }
+
+          showAlert('تم إنشاء الحساب بنجاح! جاري التوجيه...', 'success');
+          setTimeout(function() {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+
+        } catch (error) {
+          let errorMessage = 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.';
+          if (error.code === 'auth/email-already-in-use') {
+            errorMessage = 'هذا البريد الإلكتروني مستخدم بالفعل. يرجى تسجيل الدخول.';
+          } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'صيغة البريد الإلكتروني غير صحيحة.';
+          } else if (error.code === 'auth/weak-password') {
+            errorMessage = 'كلمة المرور ضعيفة جداً. استخدم ٦ أحرف على الأقل.';
+          } else if (error.code === 'auth/operation-not-allowed') {
+            errorMessage = 'تسجيل البريد الإلكتروني غير مفعّل. تواصل مع الدعم.';
+          }
+          showAlert(errorMessage, 'error');
+          registerBtn.disabled = false;
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء حساب';
+        }
+      });
+
+      // التسجيل باستخدام Google
+      googleBtn.addEventListener('click', async function() {
+        hideAlert();
+        googleBtn.disabled = true;
+        googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
+
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          const result = await firebase.auth().signInWithPopup(provider);
+          const user = result.user;
+
+          if (result.additionalUserInfo && result.additionalUserInfo.isNewUser) {
+
+          // إنشاء ملف المستخدم في Firestore (بالدور والتجربة المجانية)
+          try {
+            const dbRef = firebase.firestore();
+            const adminList = (window.SITE_CONFIG && window.SITE_CONFIG.ADMIN_EMAILS) || [];
+            const isAdmin = adminList.some(function (e) {
+              return String(e).toLowerCase() === String(user.email || '').toLowerCase();
+            });
+            const trialEnds = new Date();
+            trialEnds.setDate(trialEnds.getDate() + ((window.SITE_CONFIG && window.SITE_CONFIG.TRIAL_DAYS) || 14));
+            dbRef.collection('users').doc(user.uid).set({
+              uid: user.uid,
+              email: user.email || '',
+              displayName: user.displayName || name || (user.email ? user.email.split('@')[0] : 'مستخدم'),
+              photoURL: user.photoURL || '',
+              role: isAdmin ? 'admin' : 'user',
+              plan: 'free',
+              planStartedAt: null,
+              planExpiry: null,
+              trialEndsAt: firebase.firestore.Timestamp.fromDate(trialEnds),
+              status: 'active',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+          } catch (dbErr) {
+            console.warn('⚠️ تعذر إنشاء ملف المستخدم (سيُنشأ تلقائياً عند دخول اللوحة):', dbErr);
+          }
+          }
+
+          showAlert('تم التسجيل بنجاح! جاري التوجيه...', 'success');
+          setTimeout(function() {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } catch (error) {
+          let errorMessage = 'حدث خطأ أثناء التسجيل باستخدام Google.';
+          if (error.code === 'auth/popup-closed-by-user') {
+            errorMessage = 'تم إغلاق نافذة التسجيل. حاول مرة أخرى.';
+          }
+          showAlert(errorMessage, 'error');
+          googleBtn.disabled = false;
+          googleBtn.innerHTML = '<i class="fab fa-google"></i> التسجيل باستخدام Google';
+        }
+      });
+
+      // إخفاء الأخطاء عند الكتابة
+      nameInput.addEventListener('input', function() {
+        nameError.classList.remove('show');
+        hideAlert();
+      });
+      emailInput.addEventListener('input', function() {
+        emailError.classList.remove('show');
+        hideAlert();
+      });
+      passwordInput.addEventListener('input', function() {
+        passwordError.classList.remove('show');
+        hideAlert();
+      });
+      confirmInput.addEventListener('input', function() {
+        confirmError.classList.remove('show');
+        hideAlert();
+      });
+
+      console.log('✅ صفحة التسجيل الاحترافية جاهزة');
+    });
+  </script>
+
+  <script src="js/enhance.js"></script>
+</body>
+</html>

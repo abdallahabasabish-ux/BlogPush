@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المشتركين – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- طبقة التحميل                                               -->
+  <!-- ========================================================== -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <span>جاري تحميل المشتركين...</span>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- طبقة إخفاء الخلفية للشريط الجانبي (للجوال)               -->
+  <!-- ========================================================== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========================================================== -->
+  <!-- الشريط الجانبي                                             -->
+  <!-- ========================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-bell"></i>
+      BlogPush
+      <span>بيتا</span>
+    </div>
+
+    <ul class="nav-list">
+      <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> لوحة التحكم</a></li>
+      <li><a href="websites.html"><i class="fas fa-globe"></i> المواقع</a></li>
+      <li><a href="subscribers.html" class="active"><i class="fas fa-users"></i> المشتركين</a></li>
+      <li><a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a></li>
+      <li><a href="rss.html"><i class="fas fa-rss"></i> RSS التلقائي</a></li>
+      <li><a href="popups.html"><i class="fas fa-palette"></i> النوافذ المنبثقة</a></li>
+      <li><a href="billing.html"><i class="fas fa-credit-card"></i> الاشتراك والفواتير</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+      <li class="admin-only" style="display:none"><a href="admin.html"><i class="fas fa-user-shield"></i> لوحة الأدمن</a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-card" id="userCard">
+        <div class="avatar" id="userAvatar">أ</div>
+        <div class="info">
+          <div class="name" id="userName">مستخدم</div>
+          <div class="email" id="userEmail">user@email.com</div>
+        </div>
+        <i class="fas fa-chevron-down" style="margin-right:auto; color:#A0A0B0; font-size:14px;"></i>
+      </div>
+      <div id="logoutMenu" style="display:none; background:#F7F8FA; border-radius:12px; margin-top:8px; padding:8px 0;">
+        <button id="logoutBtn" style="background:none; border:none; width:100%; text-align:right; padding:10px 16px; font-family:'Cairo',sans-serif; font-size:15px; color:#EF4444; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================== -->
+  <!-- المحتوى الرئيسي                                           -->
+  <!-- ========================================================== -->
+  <main class="main-content">
+
+    <!-- الشريط العلوي -->
+    <header class="top-bar">
+      <div class="greeting">
+        <h1>المشتركين</h1>
+        <p>إدارة وعرض جميع المشتركين في مواقعك</p>
+      </div>
+      <div class="actions">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <button class="notif-btn">
+          <i class="fas fa-bell"></i>
+          <span class="badge">٣</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ========================================================== -->
+    <!-- بطاقات الإحصائيات                                         -->
+    <!-- ========================================================== -->
+    <section class="subscriber-stats">
+      <div class="subscriber-stat">
+        <div class="stat-number">١٢,٨٤٧</div>
+        <div class="stat-label">إجمالي المشتركين</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +١٢٪</span>
+      </div>
+      <div class="subscriber-stat">
+        <div class="stat-number">٨,٩٢١</div>
+        <div class="stat-label">نشطون (آخر ٣٠ يوم)</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +٨٪</span>
+      </div>
+      <div class="subscriber-stat">
+        <div class="stat-number">١,٢٤٠</div>
+        <div class="stat-label">جدد هذا الشهر</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +٢٣٪</span>
+      </div>
+      <div class="subscriber-stat">
+        <div class="stat-number">٦,٧٦٥</div>
+        <div class="stat-label">متفاعلون (فتح إشعار)</div>
+        <span class="stat-change down"><i class="fas fa-arrow-down"></i> -٣٪</span>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- أدوات البحث والتصفية                                      -->
+    <!-- ========================================================== -->
+    <div class="subscriber-toolbar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="بحث عن مشترك (بريد، موقع، جهاز...)" dir="auto">
+      </div>
+      <div class="filter-group">
+        <select id="filterStatus">
+          <option value="all">جميع الحالات</option>
+          <option value="active">نشط</option>
+          <option value="inactive">غير نشط</option>
+        </select>
+        <select id="filterDevice">
+          <option value="all">جميع الأجهزة</option>
+          <option value="mobile">هاتف</option>
+          <option value="desktop">كمبيوتر</option>
+          <option value="tablet">جهاز لوحي</option>
+        </select>
+        <select id="filterSite">
+          <option value="all">جميع المواقع</option>
+          <option value="site1">مدونة التقنية</option>
+          <option value="site2">مدونة التسويق</option>
+          <option value="site3">مدونة السفر</option>
+        </select>
+      </div>
+      <button class="btn-export" id="exportBtn">
+        <i class="fas fa-file-export"></i> تصدير CSV
+      </button>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- جدول المشتركين                                            -->
+    <!-- ========================================================== -->
+    <div class="subscriber-table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th class="checkbox-col">
+              <input type="checkbox" id="selectAll">
+            </th>
+            <th>المشترك</th>
+            <th>الموقع</th>
+            <th>الجهاز</th>
+            <th>المتصفح</th>
+            <th>الحالة</th>
+            <th>تاريخ الاشتراك</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="subscribersTableBody">
+          <!-- الصف 1 -->
+          <tr>
+            <td class="checkbox-col"><input type="checkbox" class="subscriber-check"></td>
+            <td>
+              <div style="font-weight:600; color:var(--color-dark);">أحمد محمد</div>
+              <div style="font-size:13px; color:var(--color-mid);">ahmed@example.com</div>
+            </td>
+            <td>مدونة التقنية</td>
+            <td><span class="device-badge"><i class="fas fa-mobile-alt"></i> هاتف</span></td>
+            <td>Chrome</td>
+            <td><span class="status-badge active">نشط</span></td>
+            <td>٢٠٢٦-٠٧-١٥</td>
+            <td>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-mid); cursor:pointer;" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-danger); cursor:pointer;" title="حذف"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+          <!-- الصف 2 -->
+          <tr>
+            <td class="checkbox-col"><input type="checkbox" class="subscriber-check"></td>
+            <td>
+              <div style="font-weight:600; color:var(--color-dark);">سارة خالد</div>
+              <div style="font-size:13px; color:var(--color-mid);">sara@example.com</div>
+            </td>
+            <td>مدونة التسويق</td>
+            <td><span class="device-badge"><i class="fas fa-desktop"></i> كمبيوتر</span></td>
+            <td>Firefox</td>
+            <td><span class="status-badge active">نشط</span></td>
+            <td>٢٠٢٦-٠٧-١٤</td>
+            <td>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-mid); cursor:pointer;" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-danger); cursor:pointer;" title="حذف"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+          <!-- الصف 3 -->
+          <tr>
+            <td class="checkbox-col"><input type="checkbox" class="subscriber-check"></td>
+            <td>
+              <div style="font-weight:600; color:var(--color-dark);">محمد علي</div>
+              <div style="font-size:13px; color:var(--color-mid);">mohamed@example.com</div>
+            </td>
+            <td>مدونة السفر</td>
+            <td><span class="device-badge"><i class="fas fa-tablet-alt"></i> جهاز لوحي</span></td>
+            <td>Safari</td>
+            <td><span class="status-badge inactive">غير نشط</span></td>
+            <td>٢٠٢٦-٠٧-١٠</td>
+            <td>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-mid); cursor:pointer;" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-danger); cursor:pointer;" title="حذف"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+          <!-- الصف 4 -->
+          <tr>
+            <td class="checkbox-col"><input type="checkbox" class="subscriber-check"></td>
+            <td>
+              <div style="font-weight:600; color:var(--color-dark);">نورا حسين</div>
+              <div style="font-size:13px; color:var(--color-mid);">nora@example.com</div>
+            </td>
+            <td>مدونة التقنية</td>
+            <td><span class="device-badge"><i class="fas fa-mobile-alt"></i> هاتف</span></td>
+            <td>Chrome</td>
+            <td><span class="status-badge active">نشط</span></td>
+            <td>٢٠٢٦-٠٧-٠٨</td>
+            <td>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-mid); cursor:pointer;" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-danger); cursor:pointer;" title="حذف"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+          <!-- الصف 5 -->
+          <tr>
+            <td class="checkbox-col"><input type="checkbox" class="subscriber-check"></td>
+            <td>
+              <div style="font-weight:600; color:var(--color-dark);">خالد يوسف</div>
+              <div style="font-size:13px; color:var(--color-mid);">khaled@example.com</div>
+            </td>
+            <td>مدونة التسويق</td>
+            <td><span class="device-badge"><i class="fas fa-desktop"></i> كمبيوتر</span></td>
+            <td>Edge</td>
+            <td><span class="status-badge inactive">غير نشط</span></td>
+            <td>٢٠٢٦-٠٧-٠٥</td>
+            <td>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-mid); cursor:pointer;" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+              <button class="btn-sm" style="background:none; border:none; color:var(--color-danger); cursor:pointer;" title="حذف"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- الترقيم (Pagination) -->
+      <div class="pagination">
+        <span>عرض ١-٥ من ١٢,٨٤٧ مشترك</span>
+        <div class="pages">
+          <button class="active">١</button>
+          <button>٢</button>
+          <button>٣</button>
+          <button>...</button>
+          <button>١٠</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================== -->
+  <!-- Firebase SDK                                               -->
+  <!-- ========================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- ملفات المشروع                                             -->
+  <!-- ========================================================== -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/subscribers.js"></script>
+
+</body>
+</html>

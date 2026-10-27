@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogPush – منصة الإشعارات الفورية للمدونين</title>
+  <meta name="description" content="BlogPush هي أقوى منصة إشعارات فورية مخصصة لمواقع Blogger. أطلق حملاتك، وزد مشتركيك، وتفاعل مع جمهورك بكل احترافية.">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- الملفات الخاصة -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- شريط الإعلان                                              -->
+  <!-- ========================================================== -->
+  <div class="announcement-bar">
+    🚀 <a href="#pricing">أطلق حملتك الأولى مجاناً – الخطة المجانية تشمل ١٠٠٠ مشترك</a>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- شريط التنقل                                               -->
+  <!-- ========================================================== -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="/" class="navbar-logo">
+        <i class="fas fa-bell"></i>
+        BlogPush
+        <span>بيتا</span>
+      </a>
+
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="#features">المميزات</a></li>
+        <li><a href="#pricing">الأسعار</a></li>
+        <li><a href="docs.html">التوثيق</a></li>
+        <li><a href="#faq">الأسئلة الشائعة</a></li>
+      </ul>
+
+      <div class="navbar-actions">
+        <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+        <a href="register.html" class="btn btn-primary">ابدأ مجاناً</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="تبديل القائمة">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================== -->
+  <!-- القسم الرئيسي (الهيرو)                                    -->
+  <!-- ========================================================== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>
+          إشعارات فورية<br/>
+          <span class="highlight">مصممة خصيصاً لـ Blogger</span>
+        </h1>
+        <p>
+          أقوى منصة إشعارات فورية مخصصة لمواقع Blogger. جمع المشتركين، أطلق الحملات، وتفاعل مع جمهورك – كل ذلك من لوحة تحكم واحدة.
+        </p>
+        <div class="hero-actions">
+          <a href="register.html" class="btn btn-primary">
+            <i class="fas fa-rocket"></i> ابدأ مجاناً
+          </a>
+          <a href="#features" class="btn btn-secondary">
+            <i class="fas fa-play-circle"></i> استكشف المميزات
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stats-item">
+            <div class="number">١م+</div>
+            <div class="label">مشترك تم إيصالهم</div>
+          </div>
+          <div class="hero-stats-item">
+            <div class="number">٩٩.٩٪</div>
+            <div class="label">ضمان التوفر</div>
+          </div>
+          <div class="hero-stats-item">
+            <div class="number">٤.٩★</div>
+            <div class="label">تقييم المستخدمين</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-dashboard-mockup">
+          <div class="mockup-header">
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+          </div>
+          <div class="mockup-chart" id="mockupChart"></div>
+          <div class="mockup-stats">
+            <div class="mockup-stat">
+              <div class="value">١٢,٨٤٧</div>
+              <div class="label">المشتركين</div>
+            </div>
+            <div class="mockup-stat">
+              <div class="value">٩٤.٢٪</div>
+              <div class="label">نسبة الوصول</div>
+            </div>
+            <div class="mockup-stat">
+              <div class="value">٨.٧٪</div>
+              <div class="label">نسبة النقر</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم الثقة                                                 -->
+  <!-- ========================================================== -->
+  <section class="trusted">
+    <div class="container">
+      <p class="trusted-text">موثوق من قبل آلاف ناشري Blogger</p>
+      <div class="trusted-logos">
+        <span class="logo-item"><i class="fas fa-pen-fancy"></i> Blogger</span>
+        <span class="logo-item"><i class="fas fa-fire"></i> Firebase</span>
+        <span class="logo-item"><i class="fas fa-cloud"></i> Google Cloud</span>
+        <span class="logo-item"><i class="fas fa-crown"></i> المؤسسات</span>
+        <span class="logo-item"><i class="fas fa-code"></i> المطورون</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم المميزات                                              -->
+  <!-- ========================================================== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features-header">
+        <span class="tag">المميزات</span>
+        <h2>كل ما تحتاجه لتنمية جمهورك</h2>
+        <p>من الإشعارات التلقائية عبر RSS إلى التحليلات المتقدمة – يوفر لك BlogPush الأدوات اللازمة للتفاعل مع قرائك.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-bolt"></i></span>
+          <h3>تكامل بنقرة واحدة</h3>
+          <p>انسخ وألصق سكربتاً واحداً في قالب Blogger الخاص بك – لا حاجة لكتابة أكواد.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-rss"></i></span>
+          <h3>الإشعارات التلقائية عبر RSS</h3>
+          <p>أرسل إشعارات تلقائياً عند نشر تدوينة جديدة – اضبطها وانسَها.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-chart-line"></i></span>
+          <h3>تحليلات فورية</h3>
+          <p>تتبع مرات الفتح، النقرات، التحويلات، ونمو المشتركين من خلال لوحات معلومات حية.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-users"></i></span>
+          <h3>إدارة المشتركين</h3>
+          <p>قسّم جمهورك حسب الجهاز، المتصفح، الموقع الجغرافي، والوسوم المخصصة.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-palette"></i></span>
+          <h3>منشئ النوافذ المنبثقة</h3>
+          <p>صمم نوافذ اشتراك جذابة عبر السحب والإفلات – دون الحاجة لخبرة في CSS.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-shield-alt"></i></span>
+          <h3>أمان مؤسسي</h3>
+          <p>مدعوم من Firebase مع تشفير شامل، مصادقة آمنة، وصلاحيات قائمة على الأدوار.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم آلية العمل                                            -->
+  <!-- ========================================================== -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="how-it-works-header">
+        <h2>ابدأ في ٣ خطوات بسيطة</h2>
+        <p>من التسجيل إلى أول إشعار – لا تستغرق العملية أكثر من ٥ دقائق.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="number">١</div>
+          <h3>أنشئ حسابك</h3>
+          <p>سجل باستخدام بريدك الإلكتروني أو حساب Google. لا حاجة لبطاقة ائتمان للخطة المجانية.</p>
+        </div>
+        <div class="step">
+          <div class="number">٢</div>
+          <h3>أضف موقعك</h3>
+          <p>أدخل رابط مدونتك على Blogger وتحقق من ملكيتها عبر وسم ميتا أو سكربت JavaScript بسيط.</p>
+        </div>
+        <div class="step">
+          <div class="number">٣</div>
+          <h3>أطلق حملتك الأولى</h3>
+          <p>أنشئ إشعاراً، حدد موعد إرساله، وشاهد تفاعل جمهورك ينمو فوراً.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم الأسعار                                               -->
+  <!-- ========================================================== -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <span class="tag">الأسعار</span>
+        <h2>أسعار بسيطة وشفافة</h2>
+        <p>ابدأ مجاناً، وتوسع مع نموك. لا توجد رسوم خفية ولا مفاجآت.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="plan-name">مجاني</div>
+          <div class="price">٠ <span>/ شهر</span></div>
+          <p class="description">مثالي للمدونين الهواة الذين بدأوا للتو.</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> ١٠٠٠ مشترك</li>
+            <li><i class="fas fa-check-circle"></i> حملات غير محدودة</li>
+            <li><i class="fas fa-check-circle"></i> الإشعارات التلقائية عبر RSS</li>
+            <li><i class="fas fa-check-circle"></i> تحليلات أساسية</li>
+            <li><i class="fas fa-check-circle"></i> دعم عبر البريد الإلكتروني</li>
+          </ul>
+          <a href="register.html" class="btn btn-secondary">ابدأ الآن</a>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="badge">الأكثر استخداماً</div>
+          <div class="plan-name">مبتدئ</div>
+          <div class="price">١٩ <span>/ شهر</span></div>
+          <p class="description">للمدونات المتنامية التي تملك جمهوراً متفاعلاً.</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> ١٠٠٠٠ مشترك</li>
+            <li><i class="fas fa-check-circle"></i> حملات غير محدودة</li>
+            <li><i class="fas fa-check-circle"></i> الإشعارات التلقائية عبر RSS</li>
+            <li><i class="fas fa-check-circle"></i> تحليلات متقدمة</li>
+            <li><i class="fas fa-check-circle"></i> عضو فريق واحد</li>
+            <li><i class="fas fa-check-circle"></i> دعم ذو أولوية</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary">ابدأ تجربة ١٤ يوماً</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="plan-name">احترافي</div>
+          <div class="price">٤٩ <span>/ شهر</span></div>
+          <p class="description">للناشرين المحترفين والوكالات.</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> ١٠٠٠٠٠ مشترك</li>
+            <li><i class="fas fa-check-circle"></i> حملات غير محدودة</li>
+            <li><i class="fas fa-check-circle"></i> الإشعارات التلقائية عبر RSS</li>
+            <li><i class="fas fa-check-circle"></i> تحليلات متقدمة + API</li>
+            <li><i class="fas fa-check-circle"></i> ٥ أعضاء فريق</li>
+            <li><i class="fas fa-check-circle"></i> دعم مخصص</li>
+          </ul>
+          <a href="register.html" class="btn btn-secondary">ابدأ تجربة ١٤ يوماً</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم آراء العملاء                                          -->
+  <!-- ========================================================== -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <h2>محبوب من قبل الناشرين حول العالم</h2>
+        <p>شاهد ما يقوله ناشرو Blogger عن BlogPush.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"غيّر BlogPush الطريقة التي أتفاعل بها مع قرائي. ميزة الإشعارات التلقائية عبر RSS وحدها توفر لي ساعات كل أسبوع."</blockquote>
+          <div class="author">
+            <div class="avatar">أح</div>
+            <div>
+              <div class="name">أحمد حسن</div>
+              <div class="role">مدون تقني</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"جربت عدة خدمات إشعارات، لكن BlogPush هي الوحيدة التي تفهم حقاً كيف يعمل Blogger. التكامل كان سلساً بلا تعقيد."</blockquote>
+          <div class="author">
+            <div class="avatar">سم</div>
+            <div>
+              <div class="name">سارة محمد</div>
+              <div class="role">ناشرة محتوى</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم الأسئلة الشائعة                                      -->
+  <!-- ========================================================== -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq-header">
+        <h2>الأسئلة الشائعة</h2>
+        <p>كل ما تحتاج معرفته عن BlogPush.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="question" onclick="toggleFaq(this)">
+            ما هو BlogPush؟
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="answer">BlogPush هي منصة إشعارات فورية مخصصة حصرياً لمواقع Blogger. تتيح لك جمع المشتركين، إرسال الإشعارات، وتحليل التفاعل – كل ذلك من لوحة تحكم واحدة.</div>
+        </div>
+        <div class="faq-item">
+          <button class="question" onclick="toggleFaq(this)">
+            هل توجد خطة مجانية؟
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="answer">نعم! تشمل خطتنا المجانية ١٠٠٠ مشترك، حملات غير محدودة، إشعارات تلقائية عبر RSS، وتحليلات أساسية. لا حاجة لبطاقة ائتمان.</div>
+        </div>
+        <div class="faq-item">
+          <button class="question" onclick="toggleFaq(this)">
+            كيف أدمج BlogPush مع مدونتي على Blogger؟
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="answer">انسخ سطراً واحداً من كود JavaScript والصقه في قالب Blogger الخاص بك. سيقوم SDK تلقائياً بتسجيل خدمة الخلفية وجمع المشتركين.</div>
+        </div>
+        <div class="faq-item">
+          <button class="question" onclick="toggleFaq(this)">
+            ما نوع التحليلات التي يوفرها BlogPush؟
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="answer">يوفر BlogPush تحليلات فورية تشمل نمو المشتركين، أداء الحملات (مرات الفتح، النقرات، التحويلات)، توزيع الأجهزة، البيانات الجغرافية، وخرائط التفاعل.</div>
+        </div>
+        <div class="faq-item">
+          <button class="question" onclick="toggleFaq(this)">
+            هل يمكنني إرسال إشعارات تلقائياً عند نشر تدوينات جديدة؟
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="answer">بالتأكيد! ميزة الإشعارات التلقائية عبر RSS تكتشف تلقائياً التدوينات الجديدة وتُنشئ إشعارات. يمكنك ضبطها للإرسال الفوري أو طلب الموافقة اليدوية.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- قسم الحث على اتخاذ إجراء                                 -->
+  <!-- ========================================================== -->
+  <section class="cta">
+    <div class="container">
+      <h2>هل أنت مستعد لتنمية جمهورك؟</h2>
+      <p>انضم إلى آلاف ناشري Blogger الذين يثقون في BlogPush للتفاعل مع قرائهم وزيادة مشتركيهم.</p>
+      <a href="register.html" class="btn btn-white">
+        <i class="fas fa-rocket"></i> ابدأ تجربتك المجانية
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- التذييل                                                   -->
+  <!-- ========================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3><i class="fas fa-bell"></i> BlogPush</h3>
+          <p>أقوى منصة إشعارات فورية مخصصة لمواقع Blogger.</p>
+        </div>
+        <div class="footer-col">
+          <h4>المنتج</h4>
+          <ul>
+            <li><a href="#features">المميزات</a></li>
+            <li><a href="#pricing">الأسعار</a></li>
+            <li><a href="docs.html">التوثيق</a></li>
+            <li><a href="changelog.html">سجل التغييرات</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الشركة</h4>
+          <ul>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
+            <li><a href="blog.html">المدونة</a></li>
+            <li><a href="status.html">الحالة</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>القوانين</h4>
+          <ul>
+            <li><a href="privacy.html">سياسة الخصوصية</a></li>
+            <li><a href="terms.html">شروط الخدمة</a></li>
+            <li><a href="cookies.html">سياسة ملفات تعريف الارتباط</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الدعم</h4>
+          <ul>
+            <li><a href="help.html">مركز المساعدة</a></li>
+            <li><a href="faq.html">الأسئلة الشائعة</a></li>
+            <li><a href="contact.html">تواصل مع الدعم</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© ٢٠٢٦ BlogPush. جميع الحقوق محفوظة.</span>
+        <div class="social">
+          <!-- تم تحديث أيقونة تويتر إلى X -->
+          <a href="#" aria-label="منصة X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="لينكد إن"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================== -->
+  <!-- جافا سكريبت                                               -->
+  <!-- ========================================================== -->
+  <script>
+    // ==========================================================
+    // تبديل القائمة في الشاشات الصغيرة
+    // ==========================================================
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+
+      if (toggle && links) {
+        toggle.addEventListener('click', function() {
+          links.classList.toggle('open');
+        });
+
+        links.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            links.classList.remove('open');
+          });
+        });
+      }
+
+      // ==========================================================
+      // رسم الأعمدة في المخطط التوضيحي
+      // ==========================================================
+      const chart = document.getElementById('mockupChart');
+      if (chart) {
+        const bars = [75, 45, 90, 60, 85, 70, 55, 95, 80, 65, 88, 72];
+        bars.forEach(function(height, index) {
+          const bar = document.createElement('div');
+          bar.className = 'bar active';
+          bar.style.height = height + '%';
+          bar.style.left = (index * 8.5) + '%';
+          bar.style.animationDelay = (index * 0.1) + 's';
+          chart.appendChild(bar);
+        });
+      }
+
+      // ==========================================================
+      // تبديل الأسئلة الشائعة
+      // ==========================================================
+      window.toggleFaq = function(button) {
+        const item = button.parentElement;
+        const answer = item.querySelector('.answer');
+        const isOpen = answer.classList.contains('open');
+
+        document.querySelectorAll('.faq-item .answer').forEach(function(el) {
+          el.classList.remove('open');
+        });
+        document.querySelectorAll('.faq-item .question').forEach(function(el) {
+          el.classList.remove('open');
+        });
+
+        if (!isOpen) {
+          answer.classList.add('open');
+          button.classList.add('open');
+        }
+      };
+
+      // ==========================================================
+      // تمرير سلس للروابط الداخلية
+      // ==========================================================
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      console.log('✅ تم تحميل صفحة BlogPush العربية بنجاح');
+    });
+  </script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script>
+    // أزرار الأسعار الذكية: إذا كان الزائر مسجلاً الدخول نوجهه لصفحة الاشتراك مباشرة
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (!user) return;
+          document.querySelectorAll('.pricing-card a[href="register.html"]').forEach(function (a) {
+            a.setAttribute('href', 'billing.html');
+            a.innerHTML = '<i class="fas fa-credit-card"></i> إدارة اشتراكي';
+          });
+          // شريط الإعلان
+          const bar = document.querySelector('.announcement-bar a[href="#pricing"]');
+          if (bar) bar.setAttribute('href', 'billing.html');
+          // أزرار النافبار
+          const reg = document.querySelector('.navbar-actions a[href="register.html"]');
+          if (reg) { reg.setAttribute('href', 'billing.html'); reg.innerHTML = 'لوحة التحكم'; }
+          const log = document.querySelector('.navbar-actions a[href="login.html"]');
+          if (log) log.innerHTML = 'لوحتي';
+        });
+      } catch (e) { /* تجاهل */ }
+    });
+  </script>
+
+</body>
+</html>

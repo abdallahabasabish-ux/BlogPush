@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المواقع – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- طبقة التحميل                                               -->
+  <!-- ========================================================== -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <span>جاري تحميل المواقع...</span>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- طبقة إخفاء الخلفية للشريط الجانبي (للجوال)               -->
+  <!-- ========================================================== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========================================================== -->
+  <!-- الشريط الجانبي                                             -->
+  <!-- ========================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-bell"></i>
+      BlogPush
+      <span>بيتا</span>
+    </div>
+
+    <ul class="nav-list">
+      <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> لوحة التحكم</a></li>
+      <li><a href="websites.html" class="active"><i class="fas fa-globe"></i> المواقع</a></li>
+      <li><a href="subscribers.html"><i class="fas fa-users"></i> المشتركين</a></li>
+      <li><a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a></li>
+      <li><a href="rss.html"><i class="fas fa-rss"></i> RSS التلقائي</a></li>
+      <li><a href="popups.html"><i class="fas fa-palette"></i> النوافذ المنبثقة</a></li>
+      <li><a href="billing.html"><i class="fas fa-credit-card"></i> الاشتراك والفواتير</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+      <li class="admin-only" style="display:none"><a href="admin.html"><i class="fas fa-user-shield"></i> لوحة الأدمن</a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-card" id="userCard">
+        <div class="avatar" id="userAvatar">أ</div>
+        <div class="info">
+          <div class="name" id="userName">مستخدم</div>
+          <div class="email" id="userEmail">user@email.com</div>
+        </div>
+        <i class="fas fa-chevron-down" style="margin-right:auto; color:#A0A0B0; font-size:14px;"></i>
+      </div>
+      <div id="logoutMenu" style="display:none; background:#F7F8FA; border-radius:12px; margin-top:8px; padding:8px 0;">
+        <button id="logoutBtn" style="background:none; border:none; width:100%; text-align:right; padding:10px 16px; font-family:'Cairo',sans-serif; font-size:15px; color:#EF4444; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================== -->
+  <!-- المحتوى الرئيسي                                           -->
+  <!-- ========================================================== -->
+  <main class="main-content">
+
+    <!-- الشريط العلوي -->
+    <header class="top-bar">
+      <div class="greeting">
+        <h1>المواقع</h1>
+        <p>إدارة مواقع Blogger الخاصة بك والتحقق من حالتها</p>
+      </div>
+      <div class="actions">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <button class="notif-btn">
+          <i class="fas fa-bell"></i>
+          <span class="badge">٣</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ========================================================== -->
+    <!-- بطاقة إضافة موقع جديد                                     -->
+    <!-- ========================================================== -->
+    <div class="add-website-card">
+      <h3 style="font-size:18px; font-weight:700; margin-bottom:16px; color:var(--color-dark);">
+        <i class="fas fa-plus-circle" style="margin-left:8px;"></i> إضافة موقع جديد
+      </h3>
+      <form id="addWebsiteForm" class="form-row">
+        <div class="form-group">
+          <label for="siteUrlInput">رابط الموقع</label>
+          <input type="url" id="siteUrlInput" placeholder="https://example.blogspot.com" dir="ltr" required>
+          <div class="error-message" id="urlError">الرجاء إدخال رابط صحيح</div>
+        </div>
+        <div class="form-group" style="flex:0.4; min-width:150px;">
+          <label for="siteNameInput">الاسم (اختياري)</label>
+          <input type="text" id="siteNameInput" placeholder="مدونتي" dir="auto">
+        </div>
+        <button type="submit" class="btn btn-primary" id="addSiteBtn">
+          <i class="fas fa-plus"></i> إضافة
+        </button>
+      </form>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- قائمة المواقع – سيتم تعبئتها بواسطة JavaScript           -->
+    <!-- ========================================================== -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="font-size:18px; font-weight:700; color:var(--color-dark);" id="websitesCount">
+          <i class="fas fa-list" style="margin-left:8px;"></i> مواقعك (٠)
+        </h3>
+        <span style="font-size:14px; color:var(--color-mid);">آخر تحديث: <span id="lastUpdate">جاري التحميل...</span></span>
+      </div>
+
+      <!-- الحاوية التي ستمتلئ بالبطاقات ديناميكياً -->
+      <div class="website-grid" id="websitesContainer">
+        <!-- سيتم عرض البطاقات هنا بواسطة JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================== -->
+  <!-- Firebase SDK                                               -->
+  <!-- ========================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- ملفات المشروع                                             -->
+  <!-- ========================================================== -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/websites.js"></script>
+
+</body>
+</html>

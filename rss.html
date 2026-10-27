@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSS التلقائي – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    .rss-info {
+      display:flex; gap:16px; align-items:flex-start;
+      background:linear-gradient(135deg,#FFFBEB,#FEFCE8);
+      border:1px solid #FDE68A; border-radius:var(--radius-lg);
+      padding:18px 24px; margin-bottom:28px;
+    }
+    .rss-info i { font-size:24px; color:#F59E0B; margin-top:3px; }
+    .rss-info p { font-size:14px; color:#92400E; line-height:1.9; margin:0; }
+    .add-rss-card {
+      background:var(--color-white); border:1px solid var(--color-light);
+      border-radius:var(--radius-lg); padding:28px 32px; margin-bottom:28px;
+    }
+    .add-rss-card h3 { font-size:18px; font-weight:800; margin-bottom:18px; }
+    .add-rss-card .form-row { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end; }
+    .add-rss-card .form-row .form-group { flex:1; min-width:220px; margin-bottom:0; }
+    .feed-card {
+      background:var(--color-white); border:1px solid var(--color-light);
+      border-radius:var(--radius); padding:22px; margin-bottom:14px;
+    }
+    .feed-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .feed-head .f-name { font-weight:700; font-size:16px; }
+    .feed-head .f-url { font-size:12.5px; color:var(--color-mid); direction:ltr; text-align:right; word-break:break-all; }
+    .feed-meta { display:flex; gap:20px; margin:14px 0; padding:10px 0; border-top:1px solid var(--color-bg); border-bottom:1px solid var(--color-bg); flex-wrap:wrap; }
+    .feed-meta .item .lbl { font-size:12px; color:var(--color-mid); }
+    .feed-meta .item .val { font-weight:700; font-size:14px; }
+    .rss-switch { position:relative; display:inline-block; width:46px; height:26px; }
+    .rss-switch input { opacity:0; width:0; height:0; }
+    .rss-switch .slider {
+      position:absolute; inset:0; background:var(--color-light);
+      border-radius:30px; cursor:pointer; transition:.3s;
+    }
+    .rss-switch .slider:before {
+      content:""; position:absolute; height:20px; width:20px;
+      right:3px; top:3px; background:#fff; border-radius:50%; transition:.3s;
+      box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    }
+    .rss-switch input:checked + .slider { background:var(--color-success); }
+    .rss-switch input:checked + .slider:before { transform:translateX(-20px); }
+    </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <span>جاري التحميل...</span>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-bell"></i>
+      BlogPush
+      <span>بيتا</span>
+    </div>
+    <ul class="nav-list">
+      <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> لوحة التحكم</a></li>
+      <li><a href="websites.html"><i class="fas fa-globe"></i> المواقع</a></li>
+      <li><a href="subscribers.html"><i class="fas fa-users"></i> المشتركين</a></li>
+      <li><a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a></li>
+      <li><a href="rss.html"><i class="fas fa-rss"></i> RSS التلقائي</a></li>
+      <li><a href="popups.html"><i class="fas fa-palette"></i> النوافذ المنبثقة</a></li>
+      <li><a href="billing.html"><i class="fas fa-credit-card"></i> الاشتراك والفواتير</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+      <li class="admin-only" style="display:none"><a href="admin.html"><i class="fas fa-user-shield"></i> لوحة الأدمن</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="user-card" id="userCard">
+        <div class="avatar" id="userAvatar">م</div>
+        <div class="info">
+          <div class="name" id="userName">مستخدم</div>
+          <div class="email" id="userEmail">user@email.com</div>
+        </div>
+        <i class="fas fa-chevron-down" style="margin-right:auto; color:#A0A0B0; font-size:14px;"></i>
+      </div>
+      <div id="logoutMenu" style="display:none; background:#F7F8FA; border-radius:12px; margin-top:8px; padding:8px 0;">
+        <button id="logoutBtn" style="background:none; border:none; width:100%; text-align:right; padding:10px 16px; font-family:'Cairo',sans-serif; font-size:15px; color:#EF4444; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-bar">
+      <div class="greeting">
+        <h1>الإشعارات التلقائية عبر RSS</h1>
+        <p>أرسل إشعاراً تلقائياً لجمهورك عند نشر أي تدوينة جديدة على مدونتك</p>
+      </div>
+      <div class="actions">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        
+      </div>
+    </header>
+
+
+    <div class="rss-info">
+      <i class="fas fa-circle-info"></i>
+      <p>
+        اربط مدونتك على Blogger بخطة RSS، وعند كل تدوينة جديدة يتم إنشاء إشعار تلقائي يحتوي عنوان التدوينة ورابطها.
+        يمكنك ضبطه على <b>الإرسال الفوري</b> أو <b>إنشاء مسودة تنتظر موافقتك</b>. اضغط "فحص الآن" في أي وقت لاكتشاف التدوينات الجديدة.
+      </p>
+    </div>
+
+    <div class="add-rss-card">
+      <h3><i class="fas fa-rss" style="color:#F59E0B;"></i> إضافة خطة RSS جديدة</h3>
+      <form id="addRssForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>الموقع</label>
+            <select id="rssSiteSelect" style="width:100%;padding:12px 14px;border:1.5px solid var(--color-light);border-radius:12px;font-family:var(--font-primary);background:var(--color-bg);" required>
+              <option value="">— اختر موقعاً —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>رابط خلاصة RSS</label>
+            <div class="input-wrapper">
+              <i class="fas fa-link"></i>
+              <input type="url" id="rssFeedUrl" dir="ltr" placeholder="https://yourblog.blogspot.com/feeds/posts/default" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>نمط الإرسال</label>
+            <select id="rssMode" style="width:100%;padding:12px 14px;border:1.5px solid var(--color-light);border-radius:12px;font-family:var(--font-primary);background:var(--color-bg);">
+              <option value="draft">مسودة تنتظر موافقتي (موصى به)</option>
+              <option value="auto">إرسال فوري تلقائي</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" id="addRssBtn" style="padding:13px 28px;white-space:nowrap;">
+            <i class="fas fa-plus"></i> إضافة
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="feedsList">
+      <div class="empty-state" style="text-align:center;padding:40px;">
+        <i class="fas fa-spinner fa-spin" style="font-size:32px;color:var(--color-gray);display:block;margin-bottom:12px;"></i>
+        جاري تحميل خطط RSS...
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/rss.js"></script>
+
+</body>
+</html>

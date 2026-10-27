@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول – BlogPush</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- أيقونة الموقع -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    /* ==========================================================
+       RESET & BASE
+       ========================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1A1A2E;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ==========================================================
+       الحاوية الرئيسية (شاشة كاملة)
+       ========================================================== */
+    .auth-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+    }
+
+    /* ==========================================================
+       الجانب الأيسر: الصورة الخلفية (تظهر فقط على الكمبيوتر)
+       ========================================================== */
+    .auth-image {
+      flex: 1;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* طبقة شفافة فوق الصورة لإبراز النص */
+    .auth-image .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 26, 46, 0.70);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    /* محتوى الصورة (نص ترحيبي) */
+    .auth-image .content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      text-align: center;
+      padding: 40px;
+      max-width: 440px;
+    }
+
+    .auth-image .content i {
+      font-size: 56px;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .auth-image .content h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .auth-image .content p {
+      font-size: 18px;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+
+    .auth-image .content .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .auth-image .content .stats .item .number {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .auth-image .content .stats .item .label {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    /* ==========================================================
+       الجانب الأيمن: نموذج تسجيل الدخول
+       ========================================================== */
+    .auth-form-wrapper {
+      width: 480px;
+      min-width: 480px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 56px;
+      background: #ffffff;
+    }
+
+    .auth-form-wrapper .brand {
+      margin-bottom: 40px;
+    }
+
+    .auth-form-wrapper .brand i {
+      font-size: 32px;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #A855F7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-form-wrapper .brand h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1A1A2E;
+      margin-top: 8px;
+    }
+
+    .auth-form-wrapper .brand p {
+      font-size: 16px;
+      color: #4A4A5A;
+      margin-top: 4px;
+    }
+
+    /* عناصر النموذج */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      color: #1A1A2E;
+      margin-bottom: 6px;
+    }
+
+    .form-group .input-wrapper {
+      position: relative;
+    }
+
+    .form-group .input-wrapper i {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #A0A0B0;
+      font-size: 18px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      border: 1.5px solid #E2E4E8;
+      border-radius: 14px;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+      background: #F7F8FA;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      border-color: #1A1A2E;
+      background: #ffffff;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.06);
+    }
+
+    .form-group .error-message {
+      color: #EF4444;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .form-group .error-message.show {
+      display: block;
+    }
+
+    /* خيارات إضافية (تذكرني + نسيت كلمة المرور) */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .form-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #4A4A5A;
+      cursor: pointer;
+    }
+
+    .form-options label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #1A1A2E;
+    }
+
+    .form-options a {
+      color: #1A1A2E;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .form-options a:hover {
+      text-decoration: underline;
+    }
+
+    /* الأزرار */
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #A855F7 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #5558E8 0%, #7C4DF0 55%, #9B45F0 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.40);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #A0A0B0;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid #E2E4E8;
+    }
+
+    .divider::before {
+      margin-left: 16px;
+    }
+
+    .divider::after {
+      margin-right: 16px;
+    }
+
+    .btn-google {
+      width: 100%;
+      padding: 14px;
+      background: #ffffff;
+      border: 1.5px solid #E2E4E8;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #1A1A2E;
+    }
+
+    .btn-google:hover {
+      background: #F7F8FA;
+      border-color: #1A1A2E;
+    }
+
+    .btn-google i {
+      color: #EA4335;
+      font-size: 20px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 15px;
+      color: #4A4A5A;
+    }
+
+    .auth-footer a {
+      color: #1A1A2E;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* رسائل التنبيه */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.error {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+      display: block;
+    }
+
+    .alert.success {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      display: block;
+    }
+
+    .alert.info {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+      display: block;
+    }
+
+    /* ==========================================================
+       RESPONSIVE: الأجهزة اللوحية والهواتف
+       ========================================================== */
+    @media (max-width: 1024px) {
+      .auth-image {
+        display: none; /* إخفاء الصورة على الشاشات المتوسطة */
+      }
+
+      .auth-form-wrapper {
+        width: 100%;
+        min-width: unset;
+        height: 100vh;
+        padding: 40px 32px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-form-wrapper {
+        padding: 24px 20px;
+      }
+
+      .auth-form-wrapper .brand h1 {
+        font-size: 24px;
+      }
+
+      .form-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .btn-primary {
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- الحاوية الرئيسية                                           -->
+  <!-- ========================================================== -->
+  <div class="auth-container">
+
+    <!-- القسم الأيسر: الصورة (تظهر فقط على الكمبيوتر) -->
+    <div class="auth-image">
+      <div class="overlay"></div>
+      <div class="content">
+        <i class="fas fa-bell"></i>
+        <h2>مرحباً بعودتك</h2>
+        <p>قم بتسجيل الدخول للوصول إلى لوحة التحكم وإدارة حملاتك الإشهارية بكل سهولة واحترافية.</p>
+        <div class="stats">
+          <div class="item">
+            <div class="number">١م+</div>
+            <div class="label">مشترك</div>
+          </div>
+          <div class="item">
+            <div class="number">٩٩.٩٪</div>
+            <div class="label">توفر</div>
+          </div>
+          <div class="item">
+            <div class="number">٤.٩★</div>
+            <div class="label">تقييم</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- القسم الأيمن: نموذج تسجيل الدخول -->
+    <div class="auth-form-wrapper">
+
+      <div class="brand">
+        <i class="fas fa-bell"></i>
+        <h1>BlogPush</h1>
+        <p>قم بتسجيل الدخول إلى حسابك</p>
+      </div>
+
+      <!-- رسائل التنبيه -->
+      <div id="alertMessage" class="alert"></div>
+
+      <!-- نموذج تسجيل الدخول -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="emailInput">البريد الإلكتروني</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="emailInput" placeholder="example@email.com" dir="ltr" required>
+          </div>
+          <div class="error-message" id="emailError">يرجى إدخال بريد إلكتروني صحيح</div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordInput">كلمة المرور</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="passwordInput" placeholder="••••••••" dir="ltr" required>
+          </div>
+          <div class="error-message" id="passwordError">كلمة المرور يجب أن تكون ٦ أحرف على الأقل</div>
+        </div>
+
+        <div class="form-options">
+          <label>
+            <input type="checkbox" id="rememberMe"> تذكرني
+          </label>
+          <a href="forgot-password.html">نسيت كلمة المرور؟</a>
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginBtn">
+          <i class="fas fa-sign-in-alt"></i> دخول
+        </button>
+      </form>
+
+      <div class="divider">أو</div>
+
+      <button class="btn-google" id="googleBtn">
+        <i class="fab fa-google"></i> تسجيل الدخول باستخدام Google
+      </button>
+
+      <div class="auth-footer">
+        ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- Firebase SDK                                               -->
+  <!-- ========================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- إعدادات Firebase (يجب تعديلها)                             -->
+  <!-- ========================================================== -->
+  <script src="js/firebase-config.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- منطق الصفحة                                               -->
+  <!-- ========================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // عناصر الصفحة
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('emailInput');
+      const passwordInput = document.getElementById('passwordInput');
+      const loginBtn = document.getElementById('loginBtn');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const alertMessage = document.getElementById('alertMessage');
+      const googleBtn = document.getElementById('googleBtn');
+
+      // التحقق من وجود Firebase
+      if (typeof firebase === 'undefined') {
+        showAlert('لم يتم تحميل Firebase. تأكد من إعداداتك.', 'error');
+        return;
+      }
+
+      // دوال العرض
+      function showAlert(text, type) {
+        alertMessage.textContent = text;
+        alertMessage.className = 'alert ' + type;
+      }
+
+      function hideAlert() {
+        alertMessage.className = 'alert';
+        alertMessage.textContent = '';
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // التحقق من صحة المدخلات
+      function validateForm() {
+        let valid = true;
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !isValidEmail(email)) {
+          emailError.classList.add('show');
+          valid = false;
+        } else {
+          emailError.classList.remove('show');
+        }
+
+        if (!password || password.length < 6) {
+          passwordError.classList.add('show');
+          valid = false;
+        } else {
+          passwordError.classList.remove('show');
+        }
+
+        return valid;
+      }
+
+      // تسجيل الدخول بالبريد وكلمة المرور
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideAlert();
+
+        if (!validateForm()) return;
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الدخول...';
+
+        try {
+          const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+          showAlert('تم تسجيل الدخول بنجاح! جاري التوجيه...', 'success');
+          setTimeout(function() {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } catch (error) {
+          let errorMessage = 'حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.';
+          if (error.code === 'auth/user-not-found') errorMessage = 'لم يتم العثور على حساب بهذا البريد الإلكتروني.';
+          else if (error.code === 'auth/wrong-password') errorMessage = 'كلمة المرور غير صحيحة. حاول مرة أخرى.';
+          else if (error.code === 'auth/invalid-email') errorMessage = 'صيغة البريد الإلكتروني غير صحيحة.';
+          else if (error.code === 'auth/too-many-requests') errorMessage = 'تم إرسال العديد من المحاولات. حاول لاحقاً.';
+          showAlert(errorMessage, 'error');
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول';
+        }
+      });
+
+      // تسجيل الدخول باستخدام Google
+      googleBtn.addEventListener('click', async function() {
+        hideAlert();
+        googleBtn.disabled = true;
+        googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
+
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          const result = await firebase.auth().signInWithPopup(provider);
+          showAlert('تم تسجيل الدخول بنجاح! جاري التوجيه...', 'success');
+          setTimeout(function() {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } catch (error) {
+          let errorMessage = 'حدث خطأ أثناء تسجيل الدخول باستخدام Google.';
+          if (error.code === 'auth/popup-closed-by-user') errorMessage = 'تم إغلاق نافذة تسجيل الدخول. حاول مرة أخرى.';
+          showAlert(errorMessage, 'error');
+          googleBtn.disabled = false;
+          googleBtn.innerHTML = '<i class="fab fa-google"></i> تسجيل الدخول باستخدام Google';
+        }
+      });
+
+      // إخفاء الأخطاء عند الكتابة
+      emailInput.addEventListener('input', function() {
+        emailError.classList.remove('show');
+        hideAlert();
+      });
+
+      passwordInput.addEventListener('input', function() {
+        passwordError.classList.remove('show');
+        hideAlert();
+      });
+
+      console.log('✅ صفحة تسجيل الدخول الاحترافية جاهزة');
+    });
+  </script>
+
+  <script src="js/enhance.js"></script>
+</body>
+</html>

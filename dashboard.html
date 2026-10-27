@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم – BlogPush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ========================================================== -->
+  <!-- طبقة التحميل                                               -->
+  <!-- ========================================================== -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <span>جاري تحميل لوحة التحكم...</span>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- طبقة إخفاء الخلفية للشريط الجانبي (للجوال)               -->
+  <!-- ========================================================== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========================================================== -->
+  <!-- الشريط الجانبي                                             -->
+  <!-- ========================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-bell"></i>
+      BlogPush
+      <span>بيتا</span>
+    </div>
+
+    <ul class="nav-list">
+      <li><a href="dashboard.html" class="active"><i class="fas fa-chart-pie"></i> لوحة التحكم</a></li>
+      <li><a href="websites.html"><i class="fas fa-globe"></i> المواقع</a></li>
+      <li><a href="subscribers.html"><i class="fas fa-users"></i> المشتركين</a></li>
+      <li><a href="campaigns.html"><i class="fas fa-bullhorn"></i> الحملات</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-line"></i> التحليلات</a></li>
+      <li><a href="rss.html"><i class="fas fa-rss"></i> RSS التلقائي</a></li>
+      <li><a href="popups.html"><i class="fas fa-palette"></i> النوافذ المنبثقة</a></li>
+      <li><a href="billing.html"><i class="fas fa-credit-card"></i> الاشتراك والفواتير</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a></li>
+      <li class="admin-only" style="display:none"><a href="admin.html"><i class="fas fa-user-shield"></i> لوحة الأدمن</a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-card" id="userCard">
+        <div class="avatar" id="userAvatar">أ</div>
+        <div class="info">
+          <div class="name" id="userName">مستخدم</div>
+          <div class="email" id="userEmail">user@email.com</div>
+        </div>
+        <i class="fas fa-chevron-down" style="margin-right:auto; color:#A0A0B0; font-size:14px;"></i>
+      </div>
+      <div id="logoutMenu" style="display:none; background:#F7F8FA; border-radius:12px; margin-top:8px; padding:8px 0;">
+        <button id="logoutBtn" style="background:none; border:none; width:100%; text-align:right; padding:10px 16px; font-family:'Cairo',sans-serif; font-size:15px; color:#EF4444; cursor:pointer; display:flex; align-items:center; gap:10px;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================== -->
+  <!-- المحتوى الرئيسي                                           -->
+  <!-- ========================================================== -->
+  <main class="main-content">
+
+    <!-- الشريط العلوي -->
+    <header class="top-bar">
+      <div class="greeting">
+        <h1 id="greetingText">مرحباً، مستخدم 👋</h1>
+        <p id="dateText">اليوم، الاثنين ١٧ يوليو ٢٠٢٦</p>
+      </div>
+      <div class="actions">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <button class="notif-btn">
+          <i class="fas fa-bell"></i>
+          <span class="badge">٣</span>
+        </button>
+        <button class="btn-new"><i class="fas fa-plus"></i> حملة جديدة</button>
+      </div>
+    </header>
+
+    <!-- بطاقات الإحصائيات -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <i class="fas fa-users"></i>
+          <span class="change up">+١٢٪</span>
+        </div>
+        <div class="stat-number" id="statSubscribers">١٢,٨٤٧</div>
+        <div class="stat-label">إجمالي المشتركين</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header">
+          <i class="fas fa-globe"></i>
+          <span class="change up">+٢</span>
+        </div>
+        <div class="stat-number" id="statWebsites">٤</div>
+        <div class="stat-label">المواقع النشطة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header">
+          <i class="fas fa-bullhorn"></i>
+          <span class="change down">-٥٪</span>
+        </div>
+        <div class="stat-number" id="statCampaigns">٢٣</div>
+        <div class="stat-label">إجمالي الحملات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-header">
+          <i class="fas fa-chart-simple"></i>
+          <span class="change up">+٨.٤٪</span>
+        </div>
+        <div class="stat-number" id="statCtr">٨.٧٪</div>
+        <div class="stat-label">نسبة النقر (CTR)</div>
+      </div>
+    </section>
+
+    <!-- المخططات -->
+    <section class="charts-grid">
+      <div class="chart-box">
+        <div class="chart-header">
+          <h3>نمو المشتركين (آخر ٣٠ يوماً)</h3>
+          <button class="filter">شهري</button>
+        </div>
+        <canvas id="growthChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-header">
+          <h3>توزيع الأجهزة</h3>
+          <button class="filter">تحديث</button>
+        </div>
+        <canvas id="deviceChart"></canvas>
+      </div>
+    </section>
+
+    <!-- جدول النشاط الأخير -->
+    <section class="recent-table">
+      <div class="table-header">
+        <h3>آخر الحملات</h3>
+        <a href="campaigns.html">عرض الكل →</a>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>عنوان الحملة</th>
+            <th>الموقع</th>
+            <th>الحالة</th>
+            <th>نسبة النقر</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>عرض خاص: تخفيضات الصيف</td>
+            <td>مدونة التقنية</td>
+            <td><span class="status-badge success">مرسلة</span></td>
+            <td>١٢.٣٪</td>
+            <td>٢٠٢٦-٠٧-١٦</td>
+          </tr>
+          <tr>
+            <td>إشعار تدوينة جديدة: أفضل ١٠ أدوات</td>
+            <td>مدونة التسويق</td>
+            <td><span class="status-badge warning">قيد الانتظار</span></td>
+            <td>—</td>
+            <td>٢٠٢٦-٠٧-١٥</td>
+          </tr>
+          <tr>
+            <td>تحديث: سياسة الخصوصية الجديدة</td>
+            <td>المدونة الرئيسية</td>
+            <td><span class="status-badge success">مرسلة</span></td>
+            <td>٥.١٪</td>
+            <td>٢٠٢٦-٠٧-١٤</td>
+          </tr>
+          <tr>
+            <td>فيديو جديد: شرح Firebase</td>
+            <td>قناة المطورين</td>
+            <td><span class="status-badge danger">فشلت</span></td>
+            <td>—</td>
+            <td>٢٠٢٦-٠٧-١٢</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ========================================================== -->
+  <!-- Firebase SDK                                               -->
+  <!-- ========================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- ========================================================== -->
+  <!-- ملفات المشروع                                             -->
+  <!-- ========================================================== -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>
